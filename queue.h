@@ -1,36 +1,23 @@
-# EDSI14
-Essential Data Structure Implementation using linked-lists
+#ifndef _QUEUE_H_LOADED
+#define _QUEUE_H_LOADED
 
-## Stack API (from `stack.h`)
-```c
-/* Initialize a stack object */
-void StackInit(Stack_t *s);
+#include <stddef.h>
+#include <stdbool.h>
 
-/* De-initialize a stack object */
-/* You may need to destroy / deallocate the data store by it */
-void StackDeInit(Stack_t *s);
+typedef struct QueueNode_struct_t
+{
+    void *data;
+    struct QueueNode_struct_t *next;
+} QueueNode_t;
 
-/* Check whether the stack is empty */
-bool StackEmpty(Stack_t *s);
+typedef struct
+{
+    QueueNode_t *head;
+    QueueNode_t **lastNodePtr;
+    int (*queueDataComparer)(const void *a, const void *b);
+    size_t count;
+} Queue_t;
 
-/* Add data to the stack */
-void StackAdd(Stack_t *s, void *data);
-
-/* Pop stack */
-/* ABORT ON EMPTY STACK */
-void *StackPop(Stack_t *s);
-
-/* Return items count of a stack */
-size_t StackCount(Stack_t *s);
-
-/* Extension of StackDeInit */
-/* dataReleaser will be call to destroy / deallocate elements if it is not NULL */
-/* Additional parameter can be passed by using param */
-void StackDeInitX(Stack_t *s, void *param, void (*dataReleaser)(void *data, void *param));
-```
-
-## Queue API (from `queue.h`)
-```c
 /* Initialize a queue object */
 /* The newly initialized queue is considered to be a standard queue */
 void QueueInit(Queue_t *q);
@@ -57,4 +44,5 @@ void QueueEnqueue(Queue_t *q, void *data);
 /* Remove the first (smallest) element */
 /* ABORT ON EMPTY QUEUE */
 void *QueueDequeue(Queue_t *q);
-```
+
+#endif
